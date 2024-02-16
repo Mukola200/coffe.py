@@ -7,7 +7,6 @@ menu = {
         "number": 2,
         "price": 30,
     },
-
     "кава латте": {
         "number": 3,
         "price": 35,
@@ -24,9 +23,7 @@ menu = {
         "number": 5,
         "price": 44,
     },
-
 }
-
 
 
 def print_menu():
@@ -57,19 +54,27 @@ def calculate_total(order):
     return total
 
 
-def print_receipt(order, total):
+def calculate_change(total, payment):
+    return payment - total
+
+
+def print_receipt(order, total, payment, change):
     print("=== Квитанція ===")
     for item, quantity in order.items():
         info = menu[item]
         print(f"{info['number']}. {item}: {quantity} x {info['price']} грн = {info['price'] * quantity} грн")
     print(f"Загальна вартість: {total} грн")
+    print(f"Отримано: {payment} грн")
+    print(f"Решта: {change} грн")
 
 
 while True:
     print_menu()
     order = process_order()
     total = calculate_total(order)
-    print_receipt(order, total)
+    payment = int(input("Введіть суму оплати: "))
+    change = calculate_change(total, payment)
+    print_receipt(order, total, payment, change)
 
     again = input("Бажаєте зробити ще одне замовлення? (y/n): ")
     if again.lower() != "y":
